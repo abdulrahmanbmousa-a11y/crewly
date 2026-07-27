@@ -306,6 +306,7 @@ export class SettingsService {
         'claude-code': general['claudeCodeCommand'] as string,
         'gemini-cli': defaults.general.runtimeCommands['gemini-cli'],
         'codex-cli': defaults.general.runtimeCommands['codex-cli'],
+        'kimi-code': defaults.general.runtimeCommands['kimi-code'],
         'crewly-agent': defaults.general.runtimeCommands['crewly-agent'],
       } satisfies Record<AIRuntime, string>;
     }

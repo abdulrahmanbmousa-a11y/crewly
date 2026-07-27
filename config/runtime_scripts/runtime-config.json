@@ -21,6 +21,13 @@
       "timeout": 90000,
       "description": "OpenAI's Codex CLI for advanced code understanding"
     },
+    "kimi-code": {
+      "displayName": "Kimi Code",
+      "initScript": "",
+      "welcomeMessage": "Kimi Code",
+      "timeout": 90000,
+      "description": "Moonshot AI's Kimi Code CLI with OAuth subscription support"
+    },
     "crewly-agent": {
       "displayName": "Crewly Agent",
       "initScript": "",

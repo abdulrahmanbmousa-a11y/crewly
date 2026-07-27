@@ -20,7 +20,7 @@ export interface ParsedTokenUsage {
   /** Model identifier (if reported by the runtime) */
   model?: string;
   /** Which runtime produced this data */
-  runtime: 'claude-code' | 'gemini-cli' | 'codex-cli';
+  runtime: 'claude-code' | 'gemini-cli' | 'codex-cli' | 'kimi-code';
 }
 
 /**
@@ -201,7 +201,7 @@ export function parseCodexCliTokens(output: string): ParsedTokenUsage | null {
  */
 export function parseRuntimeTokens(
   output: string,
-  runtimeType?: 'claude-code' | 'gemini-cli' | 'codex-cli'
+  runtimeType?: 'claude-code' | 'gemini-cli' | 'codex-cli' | 'kimi-code'
 ): ParsedTokenUsage | null {
   if (!output || output.trim().length === 0) return null;
 
@@ -216,6 +216,11 @@ export function parseRuntimeTokens(
       parsers.push(parseGeminiCliTokens, parseClaudeCodeTokens, parseCodexCliTokens);
       break;
     case 'codex-cli':
+      parsers.push(parseCodexCliTokens, parseClaudeCodeTokens, parseGeminiCliTokens);
+      break;
+    case 'kimi-code':
+      // Kimi's terminal usage output is compatible with the generic usage
+      // patterns parsed below; retain the other parsers as fallbacks.
       parsers.push(parseCodexCliTokens, parseClaudeCodeTokens, parseGeminiCliTokens);
       break;
     default:

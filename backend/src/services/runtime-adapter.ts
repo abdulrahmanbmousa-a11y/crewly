@@ -318,6 +318,17 @@ export class CodexAdapter extends BaseRuntimeAdapter {
 	readonly displayName = 'OpenAI Codex';
 }
 
+/**
+ * Adapter for Moonshot AI's Kimi Code CLI.
+ *
+ * Kimi Code uses the same interactive PTY lifecycle as the existing CLI
+ * runtimes. Authentication is managed by the Kimi CLI's OAuth login flow.
+ */
+export class KimiCodeAdapter extends BaseRuntimeAdapter {
+	readonly runtimeType = RUNTIME_TYPES.KIMI_CODE;
+	readonly displayName = 'Kimi Code';
+}
+
 // ========================= Factory =========================
 
 /**
@@ -365,6 +376,9 @@ export function getRuntimeAdapter(
 
 		case RUNTIME_TYPES.CODEX_CLI:
 			return new CodexAdapter(backend, sessionHelper, runtimeService);
+
+		case RUNTIME_TYPES.KIMI_CODE:
+			return new KimiCodeAdapter(backend, sessionHelper, runtimeService);
 
 		default: {
 			// Fallback to Claude Code for unrecognized types

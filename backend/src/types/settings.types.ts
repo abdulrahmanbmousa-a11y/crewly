@@ -12,7 +12,7 @@ import { CREWLY_AGENT_MANAGED_COMMAND } from '../constants.js';
 /**
  * Available AI runtime options
  */
-export type AIRuntime = 'claude-code' | 'gemini-cli' | 'codex-cli' | 'crewly-agent';
+export type AIRuntime = 'claude-code' | 'gemini-cli' | 'codex-cli' | 'kimi-code' | 'crewly-agent';
 
 /**
  * Array of all valid AI runtimes
@@ -21,6 +21,7 @@ export const AI_RUNTIMES: readonly AIRuntime[] = [
   'claude-code',
   'gemini-cli',
   'codex-cli',
+  'kimi-code',
   'crewly-agent',
 ] as const;
 
@@ -346,8 +347,9 @@ export function getDefaultSettings(): CrewlySettings {
       announceOnBoot: true,
       runtimeCommands: {
         'claude-code': 'claude --dangerously-skip-permissions',
-        'gemini-cli': 'gemini --yolo',
-        'codex-cli': 'codex -a never -s danger-full-access',
+          'gemini-cli': 'gemini --yolo',
+          'codex-cli': 'codex -a never -s danger-full-access',
+          'kimi-code': 'kimi --yolo',
         // The managed external binary (PR #599). NOT 'crewly-agent-in-process'
         // — that stale sentinel shelled out to a non-existent command and
         // exited 127 (issue #693).

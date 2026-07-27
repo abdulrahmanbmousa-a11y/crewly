@@ -34,7 +34,7 @@ import {
 } from '../utils/templates.js';
 
 /** Provider choice returned by the selection step */
-export type ProviderChoice = 'claude' | 'gemini' | 'codex' | 'both' | 'skip';
+export type ProviderChoice = 'claude' | 'gemini' | 'codex' | 'kimi' | 'both' | 'skip';
 
 /** Options passed from Commander.js for the onboard command */
 export interface OnboardOptions {
@@ -108,6 +108,7 @@ export async function selectProvider(rl: ReadlineInterface): Promise<ProviderCho
   console.log('    2. Gemini CLI (Google)');
   console.log(chalk.gray('       Free tier available, fast responses'));
   console.log('    3. Codex CLI (OpenAI)');
+  console.log('    4. Kimi Code (Moonshot AI)');
   console.log(chalk.gray('       GPT-powered coding assistant'));
   console.log('    4. All providers');
   console.log('    5. Skip\n');
@@ -116,6 +117,7 @@ export async function selectProvider(rl: ReadlineInterface): Promise<ProviderCho
     '1': 'claude',
     '2': 'gemini',
     '3': 'codex',
+    '4': 'kimi',
     '4': 'both',
     '5': 'skip',
   };
@@ -211,10 +213,14 @@ const PROVIDER_TOOLS: Record<string, ToolInfo[]> = {
   codex: [
     { displayName: 'Codex CLI', command: 'codex', npmPackage: '@openai/codex' },
   ],
+  kimi: [
+    { displayName: 'Kimi Code', command: 'kimi', npmPackage: '@moonshot-ai/kimi-code' },
+  ],
   both: [
     { displayName: 'Claude Code', command: 'claude', npmPackage: '@anthropic-ai/claude-code' },
     { displayName: 'Gemini CLI', command: 'gemini', npmPackage: '@google/gemini-cli' },
     { displayName: 'Codex CLI', command: 'codex', npmPackage: '@openai/codex' },
+    { displayName: 'Kimi Code', command: 'kimi', npmPackage: '@moonshot-ai/kimi-code' },
   ],
   skip: [],
 };
@@ -398,6 +404,7 @@ export function createTeamFromTemplate(template: TeamTemplate, provider: Provide
     'claude': 'claude-code',
     'gemini': 'gemini-cli',
     'codex': 'codex-cli',
+    'kimi': 'kimi-code',
     'both': 'claude-code', // Default to Claude if both are selected
     'skip': 'claude-code',
   };

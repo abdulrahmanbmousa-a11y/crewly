@@ -149,6 +149,7 @@ export const RUNTIME_TYPES = {
 	CLAUDE_CODE: 'claude-code',
 	GEMINI_CLI: 'gemini-cli',
 	CODEX_CLI: 'codex-cli',
+	KIMI_CODE: 'kimi-code',
 	CREWLY_AGENT: 'crewly-agent',
 } as const;
 
@@ -892,6 +893,7 @@ export const RUNTIME_COMPACT_COMMANDS: Record<RuntimeType, string> = {
 	'claude-code': '/compact',
 	'gemini-cli': '/compress',
 	'codex-cli': '/compact',
+	'kimi-code': '/compact',
 	'crewly-agent': '',
 } as const;
 
