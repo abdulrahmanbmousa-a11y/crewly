@@ -108,28 +108,29 @@ export async function selectProvider(rl: ReadlineInterface): Promise<ProviderCho
   console.log('    2. Gemini CLI (Google)');
   console.log(chalk.gray('       Free tier available, fast responses'));
   console.log('    3. Codex CLI (OpenAI)');
-  console.log('    4. Kimi Code (Moonshot AI)');
   console.log(chalk.gray('       GPT-powered coding assistant'));
-  console.log('    4. All providers');
-  console.log('    5. Skip\n');
+  console.log('    4. Kimi Code (Moonshot AI)');
+  console.log(chalk.gray('       OAuth subscription login supported'));
+  console.log('    5. All providers');
+  console.log('    6. Skip\n');
 
   const choices: Record<string, ProviderChoice> = {
     '1': 'claude',
     '2': 'gemini',
     '3': 'codex',
     '4': 'kimi',
-    '4': 'both',
-    '5': 'skip',
+    '5': 'both',
+    '6': 'skip',
   };
 
   while (true) {
-    const answer = await ask(rl, '  Enter choice (1-5): ');
+    const answer = await ask(rl, '  Enter choice (1-6): ');
     const choice = choices[answer];
     if (choice) {
       console.log('');
       return choice;
     }
-    console.log(chalk.yellow('  Please enter 1, 2, 3, 4, or 5.'));
+    console.log(chalk.yellow('  Please enter a number from 1 to 6.'));
   }
 }
 

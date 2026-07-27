@@ -2,6 +2,7 @@ import { RuntimeServiceFactory } from './runtime-service.factory.js';
 import { ClaudeRuntimeService } from './claude-runtime.service.js';
 import { GeminiRuntimeService } from './gemini-runtime.service.js';
 import { CodexRuntimeService } from './codex-runtime.service.js';
+import { KimiRuntimeService } from './kimi-runtime.service.js';
 import { CrewlyAgentExternalRuntimeService } from './crewly-agent/crewly-agent-external-runtime.service.js';
 import { RUNTIME_TYPES } from '../../constants.js';
 import type { SessionCommandHelper } from '../session/index.js';
@@ -72,6 +73,16 @@ describe('RuntimeServiceFactory', () => {
 			);
 
 			expect(service).toBeInstanceOf(CodexRuntimeService);
+		});
+
+		it('should create KimiRuntimeService for KIMI_CODE runtime type', () => {
+			const service = RuntimeServiceFactory.create(
+				RUNTIME_TYPES.KIMI_CODE,
+				null,
+				testProjectRoot,
+			);
+
+			expect(service).toBeInstanceOf(KimiRuntimeService);
 		});
 
 		it('should create CrewlyAgentExternalRuntimeService for CREWLY_AGENT runtime type', () => {
@@ -214,8 +225,9 @@ describe('RuntimeServiceFactory', () => {
 			expect(types).toContain(RUNTIME_TYPES.CLAUDE_CODE);
 			expect(types).toContain(RUNTIME_TYPES.GEMINI_CLI);
 			expect(types).toContain(RUNTIME_TYPES.CODEX_CLI);
+			expect(types).toContain(RUNTIME_TYPES.KIMI_CODE);
 			expect(types).toContain(RUNTIME_TYPES.CREWLY_AGENT);
-			expect(types).toHaveLength(4);
+			expect(types).toHaveLength(5);
 		});
 	});
 
@@ -224,6 +236,7 @@ describe('RuntimeServiceFactory', () => {
 			expect(RuntimeServiceFactory.isRuntimeTypeSupported(RUNTIME_TYPES.CLAUDE_CODE)).toBe(true);
 			expect(RuntimeServiceFactory.isRuntimeTypeSupported(RUNTIME_TYPES.GEMINI_CLI)).toBe(true);
 			expect(RuntimeServiceFactory.isRuntimeTypeSupported(RUNTIME_TYPES.CODEX_CLI)).toBe(true);
+			expect(RuntimeServiceFactory.isRuntimeTypeSupported(RUNTIME_TYPES.KIMI_CODE)).toBe(true);
 			expect(RuntimeServiceFactory.isRuntimeTypeSupported(RUNTIME_TYPES.CREWLY_AGENT)).toBe(true);
 		});
 

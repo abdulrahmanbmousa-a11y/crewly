@@ -195,8 +195,9 @@ describe('onboard command', () => {
       ['1', 'claude'],
       ['2', 'gemini'],
       ['3', 'codex'],
-      ['4', 'both'],
-      ['5', 'skip'],
+      ['4', 'kimi'],
+      ['5', 'both'],
+      ['6', 'skip'],
     ] as [string, ProviderChoice][])('returns "%s" when user enters %s', async (input, expected) => {
       const rl = createMockReadline([input]);
       const result = await selectProvider(rl);
@@ -209,7 +210,7 @@ describe('onboard command', () => {
       expect(result).toBe('gemini');
       // Should have printed a warning for bad inputs
       const output = logSpy.mock.calls.map((c: unknown[]) => c[0]).join('\n');
-      expect(output).toContain('Please enter 1, 2, 3, 4, or 5');
+      expect(output).toContain('Please enter a number from 1 to 6');
     });
   });
 
@@ -736,7 +737,7 @@ describe('onboard command', () => {
     });
 
     it('runs the full wizard selecting skip provider', async () => {
-      mockReadlineAnswers = ['5']; // skip provider; template auto-skips (no templates)
+      mockReadlineAnswers = ['6']; // skip provider; template auto-skips (no templates)
       mockReadlineAnswerIndex = 0;
 
       mockCheckSkillsInstalled.mockResolvedValue({ installed: 10, total: 10 });
@@ -760,8 +761,8 @@ describe('onboard command', () => {
         },
       ]);
 
-      // Answer '5' for provider (skip), '1' for template selection
-      mockReadlineAnswers = ['5', '1'];
+      // Answer '6' for provider (skip), '1' for template selection
+      mockReadlineAnswers = ['6', '1'];
       mockReadlineAnswerIndex = 0;
 
       mockCheckSkillsInstalled.mockResolvedValue({ installed: 10, total: 10 });
@@ -778,7 +779,7 @@ describe('onboard command', () => {
     it('creates team when template is selected', async () => {
       mockListTemplates.mockReturnValue([sampleTemplate]);
 
-      mockReadlineAnswers = ['5', '1']; // skip provider, select first template
+      mockReadlineAnswers = ['6', '1']; // skip provider, select first template
       mockReadlineAnswerIndex = 0;
 
       mockCheckSkillsInstalled.mockResolvedValue({ installed: 10, total: 10 });
@@ -809,7 +810,7 @@ describe('onboard command', () => {
     });
 
     it('scaffolds .crewly/ directory during interactive flow', async () => {
-      mockReadlineAnswers = ['5']; // skip provider
+      mockReadlineAnswers = ['6']; // skip provider
       mockReadlineAnswerIndex = 0;
       mockCheckSkillsInstalled.mockResolvedValue({ installed: 10, total: 10 });
 
@@ -905,7 +906,7 @@ describe('onboard command', () => {
       mockCheckSkillsInstalled.mockResolvedValue({ installed: 10, total: 10 });
 
       // Skip provider (step 1)
-      mockReadlineAnswers = ['5'];
+      mockReadlineAnswers = ['6'];
       mockReadlineAnswerIndex = 0;
 
       await onboardCommand({ template: 'web-dev-team' });
@@ -935,7 +936,7 @@ describe('onboard command', () => {
       mockListTemplates.mockReturnValue([sampleTemplate]);
       mockCheckSkillsInstalled.mockResolvedValue({ installed: 10, total: 10 });
 
-      mockReadlineAnswers = ['5', '']; // skip provider, skip template
+      mockReadlineAnswers = ['6', '']; // skip provider, skip template
       mockReadlineAnswerIndex = 0;
 
       await onboardCommand({ template: 'nonexistent' });
@@ -950,7 +951,7 @@ describe('onboard command', () => {
       mockListTemplates.mockReturnValue([]);
       mockCheckSkillsInstalled.mockResolvedValue({ installed: 10, total: 10 });
 
-      mockReadlineAnswers = ['5'];
+      mockReadlineAnswers = ['6'];
       mockReadlineAnswerIndex = 0;
 
       await onboardCommand({ template: 'nonexistent' });
